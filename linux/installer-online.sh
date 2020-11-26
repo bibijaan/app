@@ -4,15 +4,16 @@ if ! [ -x "$(command -v curl)" ]; then
 fi
 
 if ! [ -x "$(command -v unzip)" ]; then
-         echo "unzip ins't installed, installing unzip"
-         sudo apt install -y unzip
+    echo "unzip ins't installed, installing unzip"
+    sudo apt install -y unzip
 fi
 
+curl -L https://bibijaan.com/latest/linux.zip -o bibijaan.zip
 
+unzip bibijaan.zip -d bibjaan
 
-dir=$(mktemp -d)
-curl -L https://bibijaan.com/latest/linux -o $dir/bibijaan.zip
-unzip bibijaan.zip -d $dir/unzipped
-dirVer=$(echo -n $(ls unzipped))
-$dir/unzipped/$dirVer/install.sh
-rm -rf $dir
+dirVer=$(echo -n $(ls bibjaan))
+
+$dir/bibjaan/$dirVer/install.sh
+
+rm -rf bibjaan
