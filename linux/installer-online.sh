@@ -1,19 +1,42 @@
+lines() { 
+    echo "*************************"
+    echo "$1"
+    echo "-------------------------"
+    echo ""
+}
+
 if ! [ -x "$(command -v curl)" ]; then
-	echo "Curl ins't installed, installing curl"
+	lines "Curl ins't installed, installing curl"
 	sudo apt install -y curl
 fi
 
 if ! [ -x "$(command -v unzip)" ]; then
-    echo "unzip ins't installed, installing unzip"
+    lines "unzip ins't installed, installing unzip"
     sudo apt install -y unzip
 fi
 
-curl -L https://bibijaan.com/latest/linux.zip -o bibijaan.zip
+lines "Downloading zip bundle"
 
-unzip bibijaan.zip -d bibjaan
+curl -L https://bibijaan.com/latest/linux.zip -o bibijaan_temp.zip
 
-dirVer=$(echo -n $(ls bibjaan))
+echo ""
+lines "unzipping zip bundle"
 
-$dir/bibjaan/$dirVer/install.sh
+unzip bibijaan_temp.zip -d bibijaan_temp
 
-rm -rf bibjaan
+dirVer=$(echo -n $(ls bibijaan_temp))
+
+echo ""
+lines "running install.sh"
+
+bibijaan_temp/$dirVer/install.sh
+
+echo ""
+
+lines "BiBiJAAN Desktop app should be installed!"
+lines "Version: $(cat $HOME/.local/share/applications/bibijaan.desktop | grep 'Version' | cut -d '=' -f 2)"
+
+lines "Removing downloaded files"
+
+rm -rf bibijaan_temp
+rm bibijaan_temp.zip
