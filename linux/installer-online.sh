@@ -5,15 +5,19 @@ lines() {
     echo ""
 }
 
-if ! [ -x "$(command -v curl)" ]; then
-	lines "Curl ins't installed, installing curl"
-	sudo apt install -y curl
-fi
+lines "checking packages (curl, unzip, sqlite3, libsqlite3-dev)"
 
-if ! [ -x "$(command -v unzip)" ]; then
-    lines "unzip ins't installed, installing unzip"
-    sudo apt install -y unzip
-fi
+package() {
+	if ! [ -x "$(command -v $1)" ]; then
+		lines "$1 isn't installed, installing $1"
+		sudo apt install -y $1
+	fi
+}
+
+package curl
+package unzip
+package sqlite3
+package libsqlite3-dev
 
 lines "Downloading zip bundle"
 
