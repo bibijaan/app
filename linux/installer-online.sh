@@ -13,5 +13,5 @@ fi
 dir=$(mktemp -d)
 curl -L https://bibijaan.com/latest/linux -o $dir/bibijaan.zip
 unzip bibijaan.zip -d $dir/unzipped
-$dir/unzipped/$(echo -n $(ls bibijaan))/install.sh
+$dir/unzipped/$(echo -n $(ls unzipped))/install.sh
 rm -rf $dir
