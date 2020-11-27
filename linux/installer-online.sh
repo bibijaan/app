@@ -6,8 +6,7 @@ lines() {
 }
 
 package() {
-    dpkg -s $1 &> /dev/null
-    if [ $? -gt 0 ]; then
+    if ! [ -x "$(command -v $1)" ]; then
         lines "$1 isn't installed, installing $1"
 		sudo apt install -y $1
     fi
