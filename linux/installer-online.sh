@@ -5,15 +5,15 @@ lines() {
     echo ""
 }
 
-package() {
+check_command() {
     if ! [ -x "$(command -v $1)" ]; then
         lines "$1 isn't installed, installing $1"
 		sudo apt install -y $1
     fi
 }
 
-package curl
-package unzip
+check_command curl
+check_command unzip
 
 lines "Downloading zip bundle"
 
