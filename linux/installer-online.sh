@@ -21,7 +21,7 @@ lines "Downloading zip bundle"
 curl -L https://bibijaan.com/latest/linux.zip -o bibijaan_temp.zip
 echo ""
 
-if [ ! -d "bibijaan_temp.zip" ]; then
+if [ ! -f "bibijaan_temp.zip" ]; then
 	lines "Couldn't download remote zip file as bibijaan_temp.zip, exiting!"
 	exit 1 || return 1
 fi
