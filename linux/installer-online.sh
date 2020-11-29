@@ -5,25 +5,26 @@ lines() {
     echo ""
 }
 
-lines "checking packages (curl, unzip, sqlite3, libsqlite3-dev)"
-
-package() {
-	if ! [ -x "$(command -v $1)" ]; then
-		lines "$1 isn't installed, installing $1"
+check_command() {
+    if ! [ -x "$(command -v $1)" ]; then
+        lines "$1 isn't installed, installing $1"
 		sudo apt install -y $1
-	fi
+    fi
 }
 
-package curl
-package unzip
-package sqlite3
-package libsqlite3-dev
+check_command curl
+check_command unzip
 
 lines "Downloading zip bundle"
 
 curl -L https://bibijaan.com/latest/linux.zip -o bibijaan_temp.zip
-
 echo ""
+
+if [ ! -f "bibijaan_temp.zip" ]; then
+	lines "Couldn't download remote zip file as bibijaan_temp.zip, exiting!"
+	exit 1 || return 1
+fi
+
 lines "unzipping zip bundle"
 
 unzip bibijaan_temp.zip -d bibijaan_temp
@@ -36,9 +37,6 @@ lines "running install.sh"
 bibijaan_temp/$dirVer/install.sh
 
 echo ""
-
-lines "BiBiJAAN Desktop app should be installed!"
-lines "Version: $(cat $HOME/.local/share/applications/bibijaan.desktop | grep 'Version' | cut -d '=' -f 2)"
 
 lines "Removing downloaded files"
 
